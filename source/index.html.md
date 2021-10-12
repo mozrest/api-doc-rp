@@ -5,8 +5,8 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell
 
 toc_footers:
-  - <a href='#'>Contact us for development API key</a>
-  - <a href='https://mozrest.com'>Mozrest LTD</a>
+  - <a href='https://mozrest.com/contact' target='_blank'>Contact us for development API key</a>
+  - <a href='https://mozrest.com' target='_blank'>Mozrest LTD</a>
 
 includes:
 
@@ -167,6 +167,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues" \
         "city": "London",
         "postalCode": "W1J 9LL",
         "phoneNumber": "+44 20 7234 3456",
+        "rms": "liveres",
         "latitude": null,
         "longitude": null,
         "capacity": 20,
@@ -215,6 +216,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues/{venue_id}" \
   "city": "London",
   "postalCode": "W1J 9LL",
   "phoneNumber": "+44 20 7234 3456",
+  "rms": "liveres",
   "latitude": null,
   "longitude": null,
   "capacity": 20,
@@ -338,8 +340,7 @@ partySize | **Mandatory** | Number of persons (ie. **4**)
   "partySize": 4,
   "session": "lunch",
   "status": "confirmed",
-  "date": "2021-11-06",
-  "time": "2021-11-06T12:00:00+02:00",
+  "date": "2021-11-06T12:00:00+02:00",
   "notes": "I'm alergic to peanuts",
   "cancelActor": null,
   "cancelReason": null,
@@ -370,8 +371,7 @@ partySize | **Mandatory** | Number of persons (ie. **4**)
 | status | String | Booking status `[pending, confirmed, canceled, faked, honored]` |
 | partySize | Int | Number of persons |
 | session | String |Booking session in `[breakfast, brunch, lunch, afternoon, dinner, all_day]` |
-| date | Date | Booking date |
-| time | Time | Booking time |
+| date | Datetime | Booking date and time |
 | notes | Text | User notes |
 | cancelActor | String | Who had canceled the booking |
 | cancelReason | Text | Reason why booking has beed canceled |
@@ -404,7 +404,7 @@ curl POST "https://api-pre.mozrest.com/v1.0/booking" \
   -d "notes=I'm alergic to peanuts" \
   -d "contact[firstName]=John" \
   -d "contact[lastName]=Doe" \
-  -d "contact[email]=Doe" \
+  -d "contact[email]=john.doe@gmail.com" \
   -d "contact[telephone]=Doe" \
   -d "contact[locale]=en" \
   -d "contact[address][country]=gb" \
@@ -422,8 +422,7 @@ curl POST "https://api-pre.mozrest.com/v1.0/booking" \
   "venueId": "60e890aca5f07b6ee5b950b1",
   "partySize": 4,
   "status": "confirmed",
-  "date": "2021-11-06",
-  "time": "2021-11-06T12:00:00+02:00",
+  "date": "2021-11-06T12:00:00+02:00",
   "notes": "'m alergic to peanuts",
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
@@ -488,8 +487,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking/{id}/amend" \
   "venueId": "60e890aca5f07b6ee5b950b1",
   "partySize": 4,
   "status": "confirmed",
-  "date": "2021-11-06",
-  "time": "2021-11-06T12:00:00+02:00",
+  "date": "2021-11-06T12:00:00+02:00",
   "notes": "'m alergic to peanuts",
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
@@ -541,8 +539,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking" \
   "venueId": "60e890aca5f07b6ee5b950b1",
   "partySize": 4,
   "status": "confirmed",
-  "date": "2021-11-07",
-  "time": "2021-11-07T12:00:00+02:00",
+  "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
@@ -612,8 +609,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking/{id}" \
   "venueId": "60e890aca5f07b6ee5b950b1",
   "partySize": 4,
   "status": "canceled",
-  "date": "2021-11-07",
-  "time": "2021-11-07T12:00:00+02:00",
+  "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
   "cancelActor": "user",
   "cancelReason": "I can't finally attend",
@@ -667,8 +663,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking/{id}" \
   "venueId": "60e890aca5f07b6ee5b950b1",
   "partySize": 4,
   "status": "confirmed",
-  "date": "2021-11-07",
-  "time": "2021-11-07T12:00:00+02:00",
+  "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
@@ -726,8 +721,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking" \
         "venueId": "60e890aca5f07b6ee5b950b1",
         "partySize": 4,
         "status": "confirmed",
-        "date": "2021-11-07",
-        "time": "2021-11-07T12:00:00+02:00",
+        "date": "2021-11-07T12:00:00+02:00",
         "notes": "I'm alergic to peanuts and broccoli",
         "contact": {
           "id": "60e890aca5f07b6ee5b950b1",
