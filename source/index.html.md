@@ -97,7 +97,7 @@ _https://api-pre.mozrest.com_
     "address": "The Address 24, Picadilly",
     "city": "London",
     "postalCode": "W1J 9LL",
-    "phoneNumber": "+44 20 7234 3456",
+    "phoneNumber": "442072343456",
     "rms": "lres",
     "latitude": null,
     "longitude": null,
@@ -166,7 +166,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues" \
         "address": "The Address 24, Picadilly",
         "city": "London",
         "postalCode": "W1J 9LL",
-        "phoneNumber": "+44 20 7234 3456",
+        "phoneNumber": "442072343456",
         "rms": "lres",
         "latitude": null,
         "longitude": null,
@@ -215,7 +215,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues/{venue_id}" \
   "address": "The Address 24, Picadilly",
   "city": "London",
   "postalCode": "W1J 9LL",
-  "phoneNumber": "+44 20 7234 3456",
+  "phoneNumber": "442072343456",
   "rms": "lres",
   "latitude": null,
   "longitude": null,
@@ -385,7 +385,7 @@ This is how the booking object structure looks like. The booking owner is presen
 | contact[address][country] | Text | Contact's country (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format) |
 | contact[address][city] | Text | Contact's city |
 | contact[address][region] | Text | Contact's region |
-| contact[address][streetAddress] | Text | Contact's address |
+| contact[address][street] | Text | Contact's address |
 | contact[address][postalCode] | Text | Contact's postal code |
 | contact[optInConsent] | Boolean | Allow to get marketing emails and reminders (default: false) |
 
@@ -411,7 +411,7 @@ curl POST "https://api-pre.mozrest.com/v1.0/booking" \
   -d "contact[address][country]=gb" \
   -d "contact[address][city]=London" \
   -d "contact[address][region]=London" \
-  -d "contact[address][streetAddress]=Picadilly Sq. 15" \
+  -d "contact[address][street]=Picadilly Sq. 15" \
   -d "contact[address][postalCode]=W1J 9LL" \
   -d "contact[optInConsent]=true" 
 ```
@@ -465,7 +465,7 @@ Parameter | Status | Description
 | contact[address][country] | **Mandatory** | Contact's country (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format) |
 | contact[address][city] | **Optional** | Contact's city |
 | contact[address][region] | **Optional** | Contact's region |
-| contact[address][streetAddress] | **Optional** | Contact's address |
+| contact[address][street] | **Optional** | Contact's address |
 | contact[address][postalCode] | **Optional** | Contact's postal code |
 | contact[optInConsent] | **Optional** | Allow to get marketing emails and reminders (default: false) |
   
@@ -581,7 +581,7 @@ Parameter | Status | Description
 | contact[address][country] | **Optional** | Contact's country (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format) |
 | contact[address][city] | **Optional** | Contact's city |
 | contact[address][region] | **Optional** | Contact's region |
-| contact[address][streetAddress] | **Optional** | Contact's address |
+| contact[address][street] | **Optional** | Contact's address |
 | contact[address][postalCode] | **Optional** | Contact's postal code |
 | contact[optInConsent] | **Optional** | Allow to get marketing emails and reminders (default: false) | 
   
