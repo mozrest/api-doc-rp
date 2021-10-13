@@ -98,7 +98,7 @@ _https://api-pre.mozrest.com_
     "city": "London",
     "postalCode": "W1J 9LL",
     "phoneNumber": "+44 20 7234 3456",
-    "rms": "liveres",
+    "rms": "lres",
     "latitude": null,
     "longitude": null,
     "capacity": 20,
@@ -124,7 +124,7 @@ A Venue is a business location that offers bookable online services.
 | city | String | City where the venue is located |
 | postalCode | String | Postal Code where the venue is located |
 | phoneNumber | String | Venue's phone number |
-| rms | String | Reservation Management System used by the Venue `[liveres, guest-online]` |
+| rms | String | Reservation Management System used by the Venue `[lres, gol]` |
 | capacity | Int | Total capacity of the Venue |
 | category | String | Category of the venue `[restaurant, garage, ...]` |
 | url | String | Website of the Venue |
@@ -167,7 +167,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues" \
         "city": "London",
         "postalCode": "W1J 9LL",
         "phoneNumber": "+44 20 7234 3456",
-        "rms": "liveres",
+        "rms": "lres",
         "latitude": null,
         "longitude": null,
         "capacity": 20,
@@ -216,7 +216,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/venues/{venue_id}" \
   "city": "London",
   "postalCode": "W1J 9LL",
   "phoneNumber": "+44 20 7234 3456",
-  "rms": "liveres",
+  "rms": "lres",
   "latitude": null,
   "longitude": null,
   "capacity": 20,
