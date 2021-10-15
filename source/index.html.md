@@ -421,7 +421,7 @@ curl POST "https://api-pre.mozrest.com/v1.0/booking" \
         },
         "optInConsent": true
     }
-}'
+  }'
 ```
  > EXAMPLE JSON:  
    
@@ -499,6 +499,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking/{id}/amend" \
   "status": "confirmed",
   "date": "2021-11-06T12:00:00+02:00",
   "notes": "'m alergic to peanuts",
+  "stripeToken":null,
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
     "firstname": "John",
@@ -553,6 +554,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking" \
   "status": "confirmed",
   "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
+  "stripeToken":null,
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
     "firstname": "John",
@@ -624,6 +626,7 @@ curl PUT "https://api-pre.mozrest.com/v1.0/booking/{id}" \
   "status": "canceled",
   "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
+  "stripeToken":null,
   "cancelActor": "user",
   "cancelReason": "I can't finally attend",
   "canceledAt": "2021-10-20T12:00:00+02:00",
@@ -678,6 +681,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking/{id}" \
   "status": "confirmed",
   "date": "2021-11-07T12:00:00+02:00",
   "notes": "I'm alergic to peanuts and broccoli",
+  "stripeToken":null,
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
     "firstname": "John",
@@ -736,6 +740,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking" \
         "status": "confirmed",
         "date": "2021-11-07T12:00:00+02:00",
         "notes": "I'm alergic to peanuts and broccoli",
+        "stripeToken":null,
         "contact": {
           "id": "60e890aca5f07b6ee5b950b1",
           "firstname": "John",
@@ -783,7 +788,32 @@ At least one of the above parameters must be provided.
 {
   "entity": "booking",
   "entity_id": "60e5a3ed409541da3650bd90",
-  "action": "update"
+  "action": "update",
+  "data": {
+    "id": "60e890aca5f07b6ee5b950b1",
+    "venueId": "60e890aca5f07b6ee5b950b1",
+    "partySize": 4,
+    "status": "confirmed",
+    "date": "2021-11-06T12:00:00+02:00",
+    "notes": "I'm alergic to peanuts",
+    "stripeToken":null,
+    "contact": {
+      "id": "60e890aca5f07b6ee5b950b1",
+      "firstname": "John",a
+      "lastname": "Doe",
+      "email": "john.doe@gmail.com",
+      "telephone": "44344223322",
+      "locale": "en",
+      "address": {
+          "country": "GB",
+          "city": "London",
+          "region": "London",
+          "address": "Picadilly Sq. 15",
+          "postalCode": "W1J 9LL"
+      },
+      "optInConsent": true
+    }
+  }
 }
 ```
 > CANCELED EXAMPLE JSON:
@@ -792,11 +822,37 @@ At least one of the above parameters must be provided.
 {
   "entity": "booking",
   "entity_id": "60e5a3ed409541da3650bd90",
-  "action": "canceled"
+  "action": "canceled",
+  "data": {
+    "id": "60e890aca5f07b6ee5b950b1",
+    "venueId": "60e890aca5f07b6ee5b950b1",
+    "partySize": 4,
+    "status": "canceled",
+    "date": "2021-11-06T12:00:00+02:00",
+    "notes": "I'm alergic to peanuts",
+    "cancelActor": "restaurant",
+    "cancelReason": "Canceled due internal issues",
+    "contact": {
+      "id": "60e890aca5f07b6ee5b950b1",
+      "firstname": "John",a
+      "lastname": "Doe",
+      "email": "john.doe@gmail.com",
+      "telephone": "44344223322",
+      "locale": "en",
+      "address": {
+          "country": "GB",
+          "city": "London",
+          "region": "London",
+          "address": "Picadilly Sq. 15",
+          "postalCode": "W1J 9LL"
+      },
+      "optInConsent": true
+    }
+  }
 }
 ```
 
-Mozrest provides a feature to subscribe to a webhook system to be notified when any relevant information affecting your bookings has an update. Mozrest will send a notification to the given endpoint providing the entity that have been modified.
+Mozrest provides a feature to subscribe to a webhook system to be notified when any relevant information affecting your bookings has an update. Mozrest will send a notification to the given endpoint providing the entity that have been modified, the action and the full object mofified on a data parameter.
 
 <aside class="success">
 On the onboarding process, you will provide the Mozrest team with the endpoint you wish to be notified.
