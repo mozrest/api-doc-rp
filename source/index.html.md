@@ -377,6 +377,7 @@ This is how the booking object structure looks like. The booking owner is presen
 | cancelActor | String | Who had canceled the booking |
 | cancelReason | Text | Reason why the booking has been canceled |
 | canceledAt | Datetime | When the booking was canceled (UTC) |
+| stripeToken | String | Stripe token for customers credit card |
 | contact[firstname] | Text | Contact's firstname |
 | contact[lastname] | Text | Contact's lastname |
 | contact[email] | Text | Contact's email (ie. john.doe@email.com) |
@@ -397,23 +398,30 @@ This endpoint allows to create a Booking.
 
 ```shell
 curl POST "https://api-pre.mozrest.com/v1.0/booking" \
-  -H "Authorization: Bearer {{api_token}}" \
-  -d "venueId=60e5a3ed409541da3650bd90" \
-  -d "partySize=4" \
-  -d "status=confirmed" \
-  -d "date=1634387400" \
-  -d "notes=I'm alergic to peanuts" \
-  -d "contact[firstname]=John" \
-  -d "contact[lastname]=Doe" \
-  -d "contact[email]=john.doe@gmail.com" \
-  -d "contact[telephone]=Doe" \
-  -d "contact[locale]=en" \
-  -d "contact[address][country]=gb" \
-  -d "contact[address][city]=London" \
-  -d "contact[address][region]=London" \
-  -d "contact[address][street]=Picadilly Sq. 15" \
-  -d "contact[address][postalCode]=W1J 9LL" \
-  -d "contact[optInConsent]=true" 
+  -H "Authorization: Bearer {{api_token}}" \ 
+  --data-raw '{
+    "venueId": "60e5a3edfc8747ddfe1c10da",
+    "partySize": 2,
+    "status": "confirmed",
+    "date": 1634832900,
+    "notes": "I'\''m alergic to peanuts",
+    "stripeToken": "pm_1JkkRzAY52ufXkvaHWKbasua",
+    "contact": {
+        "firstname": "john",
+        "lastname": "Doe",
+        "email": "john.doe@gmail.com",
+        "telephone": "34655040452",
+        "locale": "en",
+        "address": {
+            "country": "GB",
+            "city": "London",
+            "region": "London",
+            "street": "Picadilly Sq. 15",
+            "postalCode": "W1J 9LL"
+        },
+        "optInConsent": true
+    }
+}'
 ```
  > EXAMPLE JSON:  
    
@@ -424,7 +432,8 @@ curl POST "https://api-pre.mozrest.com/v1.0/booking" \
   "partySize": 4,
   "status": "confirmed",
   "date": "2021-11-06T12:00:00+02:00",
-  "notes": "'m alergic to peanuts",
+  "notes": "I'm alergic to peanuts",
+  "stripeToken": "pm_1JkkRzAY52ufXkvaHWKbasua",
   "contact": {
     "id": "60e890aca5f07b6ee5b950b1",
     "firstname": "John",
@@ -529,8 +538,10 @@ This endpoint allows to amend a pending status booking.
 ```shell
 curl PUT "https://api-pre.mozrest.com/v1.0/booking" \
   -H "Authorization: Bearer {{api_token}}" \
-  -d "date=1636282800" \
-  -d "notes=I'm alergic to peanuts and broccoli"
+  --data-raw '{
+    "partySize": 4,
+    "date": 1634401800
+  }'
 ```
  > EXAMPLE JSON:  
    
@@ -572,7 +583,6 @@ Parameter | Status | Description
 | status | **Optional** | Booking status `[confirmed, canceled]` |
 | partySize | **Optional** | Number of persons |
 | date | **Optional** | Date time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is **1634387400** on timestamp) |
-| notes | **Optional** | User notes |
 | contact[firstname] | **Optional** | Contact's firstname |
 | contact[lastname] | **Optional** | Contact's lastname |
 | contact[email] | **Optional** | Contact's email |
@@ -599,8 +609,10 @@ This endpoint allows to cancel a booking.
 ```shell
 curl PUT "https://api-pre.mozrest.com/v1.0/booking/{id}" \
   -H "Authorization: Bearer {{api_token}}" \  
-  -d "cancelActor='user'" \  
-  -d "cancelReason='I can't finally attend'" \
+  --data-raw '{
+    "cancelActor": "me",
+    "cancelReason": "test cancel"
+  }'
 ```
  > EXAMPLE JSON:  
    
@@ -707,7 +719,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking" \
   -H "Authorization: Bearer {{api_token}}" \  
   -d "offset=0" \
   -d "limit=10" \
-  -d "userId='60e5a3ed409541da3650bd90'" \  
+  -d "email='john.doe@gmail.com'" \  
   -d "venueId='60e5a3ed409541da3650bd90'" \  
   -d "date='2021-10-24'" \
 ```
@@ -754,7 +766,7 @@ curl GET "https://api-pre.mozrest.com/v1.0/booking" \
 
 Parameter | Status | Description
 --------- | ------- | -----------
-userId | **Optional** | User id that owns the booking
+email | **Optional** | User email that owns the booking
 venueId | **Optional** | Venue id where the booking takes place
 date | **Optional** | Date of the booking (format 2021-10-24) 
 
