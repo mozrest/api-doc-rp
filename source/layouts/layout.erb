@@ -117,6 +117,15 @@ under the License.
                 <% h1[:children].each do |h2| %>
                   <li>
                     <a href="#<%= h2[:id] %>" class="toc-h2 toc-link" data-title="<%= h2[:title] %>"><%= h2[:content] %></a>
+                    <% if h2[:children].length > 0 %>
+                      <ul class="toc-list-h3">
+                        <% h2[:children].each do |h3| %>
+                          <li>
+                            <a href="#<%= h3[:id] %>" class="toc-h3 toc-link" data-title="<%= h3[:content] %>"><%= h3[:content] %></a>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
                   </li>
                 <% end %>
               </ul>
@@ -130,6 +139,24 @@ under the License.
             <li><%= footer %></li>
           <% end %>
         </ul>
+      <% end %>
+      <% if current_page.data.api_version %>
+        <div class="last-update">
+         <div>Current API version:</div>
+         <div><%= current_page.data.api_version %></div>
+        </div>
+      <% end %>
+      <% if current_page.data.api_doc_version %>
+        <div class="last-update">
+         <div>API Doc version:</div>
+         <div><%= current_page.data.api_doc_version %></div>
+        </div>
+      <% end %>
+      <% if current_page.data.last_update %>
+        <div class="last-update">
+         <div>Last update:</div>
+         <div><%= current_page.data.last_update %></div>
+        </div>
       <% end %>
     </div>
     <div class="page-wrapper">
