@@ -855,7 +855,7 @@ At least one of the above parameters must be provided.
 }
 ```
 
-Mozrest provides a feature to subscribe to a webhook system to be notified when any relevant information affecting your bookings has an update. Mozrest will send a notification to the given endpoint providing the entity that have been modified, the action and the full object mofified on a data parameter.
+Mozrest provides a feature to subscribe to a webhook system to be notified when any relevant information affecting your bookings has an update. Mozrest will send a notification to the given endpoint providing the entity that have been modified, the action and the full object modified on a data parameter.
 
 <aside class="success">
 On the onboarding process, you will provide the Mozrest team with the endpoint you wish to be notified.
@@ -985,7 +985,7 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 
 | Key                        | Type | Description                                                                                                                     |
 |----------------------------| ---- |---------------------------------------------------------------------------------------------------------------------------------|
-| date                       | String | Date requested for availability (format: YYYY-MM-DD)                                                                            |
+| date                       | String | Date time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is **1634387400** on timestamp                                                                           |
 | partySize                  | Int | Number of people                                                                                                                |
 | slots                      | Array | List of maximum 9 available slots around the selected time                                                                      |
 | openingTimes               | Array | Full list of available slots                                                                                                    |
