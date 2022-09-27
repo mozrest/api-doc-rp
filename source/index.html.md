@@ -239,6 +239,8 @@ id | **Mandatory** | Venue id to retrieve.
 
 # Availability
 
+Find [here](#the-availability-object) the availability object definition.
+
 ## Get Venue Availability
 This endpoint retrieves a list of slots available for a specific Venue on a specific date, session and party size.
 
@@ -247,7 +249,7 @@ This endpoint retrieves a list of slots available for a specific Venue on a spec
 ```shell
 curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
   -H "Authorization: Bearer {{api_key}}" \
-  -d "mzId='60e5a3ed409541da3650bd90'" \
+  -d "venueId='60e5a3ed409541da3650bd90'" \
   -d "date=1633930574" \
   -d "partySize=4"
 ```
@@ -255,7 +257,6 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
    
 ```json
 {
-  "mzId": "60e5a3ed409541da3650bd90",
   "date": "2020-03-20",
   "partySize": 4,
   "slots": [
@@ -275,7 +276,23 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
     {
       "time": "21:00"
     }
-  ]
+  ],
+  "nextAvailability": {
+    "date": 1664282700,
+    "slots": [
+      {
+        "time": "12:45" //Just if the next availability is for the same requested day
+      }
+    ]
+  },
+  "previousAvailability": {
+    "date": 1664282700,
+    "slots": [
+      {
+        "time": "12:45" //Just if the previous availability is for the same requested day
+      }
+    ]
+  }
 }
 ```
   
@@ -287,7 +304,7 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
 
 Parameter | Type          | Description
 --------- |---------------| -----------
-mzId | **Mandatory** | Venue id
+venueId | **Mandatory** | Venue id
 date | **Mandatory** | Date time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is **1634387400** on timestamp)
 partySize | **Mandatory** | Number of persons (ie. **4**)  
 
@@ -923,9 +940,6 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 
 ```json
 {
-  "mzId": "63321092c7bcd30e12aa104b",
-  "rmsId": null,
-  "rpId": null,
   "date": 1664377200,
   "partySize": 4,
   "slots": [
@@ -969,13 +983,16 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 }
 ```
 
-| Key                     | Type | Description                                                                                                 |
-|-------------------------| ---- |-------------------------------------------------------------------------------------------------------------|
-| mzId                    | String | Venue id                                                                                                    |
-| date                    | String | Date requested for availability (format: YYYY-MM-DD)                                                        |
-| partySize               | Int | Number of people                                                                                            |
-| slots                   | Array | List of maximum 9 available slots around the selected time                                                  |
-| openingTimes            | Array | Full list of available slots                                                                                |
+| Key                        | Type | Description                                                                                                                     |
+|----------------------------| ---- |---------------------------------------------------------------------------------------------------------------------------------|
+| date                       | String | Date requested for availability (format: YYYY-MM-DD)                                                                            |
+| partySize                  | Int | Number of people                                                                                                                |
+| slots                      | Array | List of maximum 9 available slots around the selected time                                                                      |
+| openingTimes               | Array | Full list of available slots                                                                                                    |
+| nextAvailability[date]     | Array | Next slot available. Just available when there is not availability for the requested slot.                                      |
+| nextAvailability[slots]    | Array | Next slot available in HH:ii format (ie. 14:45). Just shown when the next available slot is for the same requested day.         |
+| previousAvailability[date] | Array | Previous slot available for the same day if there is not availability for the requested slot.                                   |
+| previousAvailability[slots]    | Array | Previous slot available in HH:ii format (ie. 12:45). Just shown when the previous available slot is for the same requested day. |
 
 ## The Pending Booking Object
 
