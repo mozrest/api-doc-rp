@@ -8,9 +8,9 @@ toc_footers:
   - <a href='https://mozrest.com/contact' target='_blank'>Contact us for development API key</a>
   - <a href='https://mozrest.com' target='_blank'>Mozrest LTD</a>
 
-api_version: v1 (1.7.0)
+api_version: v1 (1.9.0)
 
-last_update: 2022-09-27 06:10 UTC
+last_update: 2023-02-21 14:40 UTC
 
 includes:
 
@@ -125,17 +125,26 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/venues" \
     {
       "id": "60e5a3ed409541da3650bd90",
       "name": "Restaurant Name",
-      "countryCode": "GB",
-      "address": "The Address 24, Picadilly",
       "city": "London",
+      "address": "The Address 24, Picadilly",
+      "countryCode": "GB",
       "postalCode": "W1J 9LL",
       "phoneNumber": "442072343456",
       "latitude": null,
       "longitude": null,
-      "capacity": 20,
-      "url": null,
+      "timezone": "Europe/London",
+      "minCovers": 1,
+      "maxCovers": 15,
+      "bookingMessage": "Enjoy unique moments of relaxation under the sky, with sunshade and comfortable pillows, just a 'bloom' away from the seawater.\nMenu Details\n\n• Rates include minimum consumption\n• Ιndividual Beach towels are provided\n• Cancellation policy 1 week before the date 100% refund",
+      "bookableAreas": true,
+      "rms" : {
+        "id" : "60e5a3ed409541da3650bd90",
+        "name": "Reservation Software name"
+      },
+      "url": "https://venuewebsite.com",
       "minAdvanceBooking": 1,
       "minAdvanceOnlineCancelling": 24,
+      "currency": "GBP",
       "paymentDefinition": {
         "requireCreditCard": true,
         "deposit": {
@@ -149,14 +158,11 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/venues" \
       },
       "paymentGateway": {
         "gateway": "stripe",
-        "apiVersion": "2020-08-27",
-        "sdkVersion": null,
         "publishKey": "pk_test_2343823823823",
-        "merchantId": null,
-        "legalInvoicingName": "Venue Name LTD",
-        "paymentCountryCode": "GB"
+        "merchantId": null
       },
-      "currency": "GBP"
+      "paymentPolicy": "Dinner Cancellation Policy: We ask that any cancellation to your reservation be made no less than 24 hours prior. For no shows, you will be subject to fee of $25 per person that will be applied to the credit card on file.",
+      "confirmationMessage": "Thank you for choosing Scampi! We look forward to you dining with us.<b>Please note, there is a 15 minutes grace period for late arrivals and we only seat complete parties.<b> If your party completes later than 15 minutes after your reservation time, you are subject to waiting for the next available table.<br>If we can do anything to better accommodate your dining experience, please email eat@scampinyc.com or call us at 212.888.2171 between 12pm - 5pm, Monday - Friday. <br>"
     },
     { ... }
   ]
@@ -189,17 +195,26 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/venues/{venue_id}" \
 {
   "id": "60e5a3ed409541da3650bd90",
   "name": "Restaurant Name",
-  "countryCode": "GB",
-  "address": "The Address 24, Picadilly",
   "city": "London",
+  "address": "The Address 24, Picadilly",
+  "countryCode": "GB",
   "postalCode": "W1J 9LL",
   "phoneNumber": "442072343456",
   "latitude": null,
   "longitude": null,
-  "capacity": 20,
-  "url": null,
+  "timezone": "Europe/London",
+  "minCovers": 1,
+  "maxCovers": 15,
+  "bookingMessage": "Enjoy unique moments of relaxation under the sky, with sunshade and comfortable pillows, just a 'bloom' away from the seawater.\nMenu Details\n\n• Rates include minimum consumption\n• Ιndividual Beach towels are provided\n• Cancellation policy 1 week before the date 100% refund",
+  "bookableAreas": true,
+  "rms" : {
+    "id" : "60e5a3ed409541da3650bd90",
+    "name": "Reservation Software name"
+  },
+  "url": "https://venuewebsite.com",
   "minAdvanceBooking": 1,
   "minAdvanceOnlineCancelling": 24,
+  "currency": "GBP",
   "paymentDefinition": {
     "requireCreditCard": true,
     "deposit": {
@@ -213,14 +228,11 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/venues/{venue_id}" \
   },
   "paymentGateway": {
     "gateway": "stripe",
-    "apiVersion": "2020-08-27",
-    "sdkVersion": null,
     "publishKey": "pk_test_2343823823823",
-    "merchantId": null,
-    "legalInvoicingName": "Venue Name LTD",
-    "paymentCountryCode": "GB"
+    "merchantId": null
   },
-  "currency": "GBP"
+  "paymentPolicy": "Dinner Cancellation Policy: We ask that any cancellation to your reservation be made no less than 24 hours prior. For no shows, you will be subject to fee of $25 per person that will be applied to the credit card on file.",
+  "confirmationMessage": "Thank you for choosing Scampi! We look forward to you dining with us.<b>Please note, there is a 15 minutes grace period for late arrivals and we only seat complete parties.<b> If your party completes later than 15 minutes after your reservation time, you are subject to waiting for the next available table.<br>If we can do anything to better accommodate your dining experience, please email eat@scampinyc.com or call us at 212.888.2171 between 12pm - 5pm, Monday - Friday. <br>"
 }
 ```
 
@@ -257,15 +269,17 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
    
 ```json
 {
-  "date": "2020-03-20",
-  "partySize": 4,
+  "date": 1677247200,
+  "partySize": 2,
   "slots": [
     {
-      "time": "12:00"
+      "time": "12:00",
+      "requireCreditCard": false
     },
     {...},
     {
       "time": "14:00",
+      "requireCreditCard": true
     }
   ],
   "openingTimes": [
@@ -281,7 +295,7 @@ curl GET "https://api-sandbox.mozrest.com/v1/bc/availability" \
     "date": 1664282700,
     "slots": [
       {
-        "time": "12:45" //Just if the next availability is for the same requested day
+        "time": "12:45"
       }
     ]
   },
@@ -868,20 +882,30 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 
 ```json
 {
-  "name": "Venue Name",
-  "country": "GB",
-  "address": "The Address 24, Picadilly",
+  "id": "60e5a3ed409541da3650bd90",
+  "name": "Restaurant Name",
   "city": "London",
+  "address": "The Address 24, Picadilly",
+  "countryCode": "GB",
   "postalCode": "W1J 9LL",
   "phoneNumber": "442072343456",
-  "url": "http://your-url.com",
-  "latitude": "51.56797",
-  "longitude": "-0.28122",
-  "capacity": 100,
+  "latitude": null,
+  "longitude": null,
+  "timezone": "Europe/London",
+  "minCovers": 1,
+  "maxCovers": 15,
+  "bookingMessage": "Enjoy unique moments of relaxation under the sky, with sunshade and comfortable pillows, just a 'bloom' away from the seawater.\nMenu Details\n\n• Rates include minimum consumption\n• Ιndividual Beach towels are provided\n• Cancellation policy 1 week before the date 100% refund",
+  "bookableAreas": true,
+  "rms" : {
+    "id" : "60e5a3ed409541da3650bd90",
+    "name": "Reservation Software name"
+  },
+  "url": "https://venuewebsite.com",
   "minAdvanceBooking": 1,
-  "minAdvanceOnlineCanceling": 24,
+  "minAdvanceOnlineCancelling": 24,
+  "currency": "GBP",
   "paymentDefinition": {
-    "requireCreditCard": "true",
+    "requireCreditCard": true,
     "deposit": {
       "type": "fixed_price",
       "amount": 2000
@@ -893,46 +917,46 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
   },
   "paymentGateway": {
     "gateway": "stripe",
-    "apiVersion": "2020-08-27",
-    "sdkVersion": null,
     "publishKey": "pk_test_2343823823823",
-    "merchantId": null,
-    "legalInvoicingName": "Venue Name LTD",
-    "paymentCountryCode": "GB"
+    "merchantId": null
   },
-  "currency": "GBP",
-  "timezone": "Europe/London"
+  "paymentPolicy": "Dinner Cancellation Policy: We ask that any cancellation to your reservation be made no less than 24 hours prior. For no shows, you will be subject to fee of $25 per person that will be applied to the credit card on file.",
+  "confirmationMessage": "Thank you for choosing Scampi! We look forward to you dining with us.<b>Please note, there is a 15 minutes grace period for late arrivals and we only seat complete parties.<b> If your party completes later than 15 minutes after your reservation time, you are subject to waiting for the next available table.<br>If we can do anything to better accommodate your dining experience, please email eat@scampinyc.com or call us at 212.888.2171 between 12pm - 5pm, Monday - Friday. <br>"
 }
 ```
 
-| Key | Type         | Description                                                                                                                                                     |
-| --- |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id | String       | Venue id                                                                                                                                                        |
-| name | String       | Venue name                                                                                                                                                      |
-| country | String       | Country code where the venue is located (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format)                            |
-| address | String       | Address where the venue is located                                                                                                                              |
-| city | String       | City where the venue is located                                                                                                                                 |
-| postalCode | String       | Postcode where the venue is located                                                                                                                             |
-| phoneNumber | String       | Venue's phone number                                                                                                                                            |
-| url | String       | Venue's website URL                                                                                                                                             |
-| latitude | String       | Venue's latitude                                                                                                                                                |
-| longitude | String       | Venue's longitude                                                                                                                                               |
-| minAdvanceBooking | Int          | Minimum hours in advance a booking have to be placed                                                                                                            |
-| minAdvanceOnlineCancelling | Int          | String hours in advance a booking can be canceled                                                                                                               |
-| paymentDefinition[requireCreditCard] | Int          | Does the booking require a Credit Card Guarantee? `["true", "false"]`                                                                                           |
-| paymentDefinition[deposit][type] | String       | What type of deposit is? `["fixed_price", "per_person"]`                                                                                                        |
-| paymentDefinition[deposit][amount] | Int          | Deposit amount. Integer multiply per 100. Ie. 20,00€: 2000                                                                                                      |
-| paymentDefinition[noShowFee][type] | String       | What type of no show fee is? `["fixed_price", "per_person"]`                                                                                                    |
-| paymentDefinition[noShowFee][amount] | Int          | No show fee amount. Integer multiply per 100. Ie. 20,00€: 2000                                                                                                  |
-| paymentGateway[gateway] | String       | Payment gateway used `[ stripe, braintree, adyen ]`                                                                                                             |
-| paymentGateway[apiVersion] | String       | Payment gateway API version you use. Ie: Stripe API version: 2020-08-27                                                                                         |
-| paymentGateway[sdkVersion] | String       | Payment gateway SDK version you use. Ie: Braintree: 3.85.2                                                                                                      |
-| paymentGateway[publishKey] | String       | Publishable key for the payment gateway                                                                                                                         |
-| paymentGateway[merchantId] | **Optional** | Your Merchant Id for the payment gateway                                                                                                                        |
-| paymentGateway[legalInvoicingName] | String       | Name displayed on the customer's invoice                                                                                                                        |
-| paymentGateway[paymentCountryCode] | String       | Country code where the payment is legally charged (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO2</a> format)                            |
-| currency | String       | Currency code used for payments (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)                                          |
-| timezone | String       | Time zone where the Venue is located (see possible <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">time zone values</a>) |
+| Key                                  | Type   | Description                                                                                                                                                     |
+|--------------------------------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                                   | String | Venue id                                                                                                                                                        |
+| name                                 | String | Venue name                                                                                                                                                      |
+| city                                 | String | City where the venue is located                                                                                                                                 |
+| address                              | String | Address where the venue is located                                                                                                                              |
+| country                              | String | Country code where the venue is located (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format)                            |
+| postalCode                           | String | Postcode where the venue is located                                                                                                                             |
+| phoneNumber                          | String | Venue's phone number                                                                                                                                            |
+| latitude                             | String | Venue's latitude                                                                                                                                                |
+| longitude                            | String | Venue's longitude                                                                                                                                               |
+| timezone                             | String | Time zone where the Venue is located (see possible <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank">time zone values</a>) |
+| minCovers                            | Int    | Minimum covers to place a booking                                                                                                                               |
+| maxCover                             | Int    | Maximum covers to place a booking                                                                                                                               |
+| bookingMessage                       | String | Message from the venue to be displayed before to place a reservation                                                                                            |
+| bookableAreas                        | Bool   | Does the venue have bookable areas                                                                                                                              |
+| rms[id]                              | String | Reservation Management Software id                                                                                                                              |
+| rms[name]                            | String | Reservation Management Software name                                                                                                                            |
+| url                                  | String | Venue's website URL                                                                                                                                             |
+| minAdvanceBooking                    | Int    | Minimum hours in advance a booking have to be placed                                                                                                            |
+| minAdvanceOnlineCancelling           | Int    | String hours in advance a booking can be canceled                                                                                                               |
+| currency                             | String | Currency code used for payments (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)                                          |
+| paymentDefinition[requireCreditCard] | Int    | Does the booking require a Credit Card Guarantee? `["true", "false"]`                                                                                           |
+| paymentDefinition[deposit][type]     | String | What type of deposit is? `["fixed_price", "per_person"]`                                                                                                        |
+| paymentDefinition[deposit][amount]   | Int    | Deposit amount. Integer multiply per 100. Ie. 20,00€: 2000                                                                                                      |
+| paymentDefinition[noShowFee][type]   | String | What type of no show fee is? `["fixed_price", "per_person"]`                                                                                                    |
+| paymentDefinition[noShowFee][amount] | Int    | No show fee amount. Integer multiply per 100. Ie. 20,00€: 2000                                                                                                  |
+| paymentGateway[gateway]              | String | Payment gateway used `[ stripe, braintree, adyen ]`                                                                                                             |
+| paymentGateway[publishKey]           | String | Publishable key for the payment gateway                                                                                                                         |
+| paymentGateway[merchantId]           | String | Your Merchant Id for the payment gateway                                                                                                                        |
+| paymentPolicy                        | String | Message from the venue related to payments/deposits in case credit card is required                                                                             |
+| confirmationMessage                  | String | Message from the venue to be displayed after placing a reservation                                                                                              |
 
 ## The Availability Object
 
@@ -944,31 +968,40 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
   "partySize": 4,
   "slots": [
     {
-      "time": "14:00"
+      "time": "14:00",
+      "requireCreditCard": true
     },
     {
-      "time": "14:15"
+      "time": "14:15",
+      "requireCreditCard": true
     },
     {
-      "time": "14:30"
+      "time": "14:30",
+      "requireCreditCard": true
     },
     {
-      "time": "14:45"
+      "time": "14:45",
+      "requireCreditCard": true
     },
     {
-      "time": "15:00"
+      "time": "15:00",
+      "requireCreditCard": true
     },
     {
-      "time": "15:15"
+      "time": "15:15",
+      "requireCreditCard": true
     },
     {
-      "time": "15:30"
+      "time": "15:30",
+      "requireCreditCard": true
     },
     {
-      "time": "15:45"
+      "time": "15:45",
+      "requireCreditCard": true
     },
     {
-      "time": "16:00"
+      "time": "16:00",
+      "requireCreditCard": false
     }
   ],
   "openingTimes": [
@@ -983,16 +1016,17 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 }
 ```
 
-| Key                        | Type | Description                                                                                                                     |
-|----------------------------| ---- |---------------------------------------------------------------------------------------------------------------------------------|
-| date                       | String | Date time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is **1634387400** on timestamp                                                                           |
-| partySize                  | Int | Number of people                                                                                                                |
-| slots                      | Array | List of maximum 9 available slots around the selected time                                                                      |
-| openingTimes               | Array | Full list of available slots                                                                                                    |
-| nextAvailability[date]     | Array | Next slot available. Just available when there is not availability for the requested slot.                                      |
-| nextAvailability[slots]    | Array | Next slot available in HH:ii format (ie. 14:45). Just shown when the next available slot is for the same requested day.         |
-| previousAvailability[date] | Array | Previous slot available for the same day if there is not availability for the requested slot.                                   |
-| previousAvailability[slots]    | Array | Previous slot available in HH:ii format (ie. 12:45). Just shown when the previous available slot is for the same requested day. |
+| Key                         | Type   | Description                                                                                                                     |
+|-----------------------------|--------|---------------------------------------------------------------------------------------------------------------------------------|
+| date                        | String | Date time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is **1634387400** on timestamp                           |
+| partySize                   | Int    | Number of people                                                                                                                |
+| slots[time]                 | Array  | List of maximum 9 available slots around the selected time                                                                      |
+| slots[requireCreditCard]    | Array  | Is credit card required to book?                                                                                                |
+| openingTimes                | Array  | Full list of available slots                                                                                                    |
+| nextAvailability[date]      | Array  | Next slot available. Just available when there is not availability for the requested slot.                                      |
+| nextAvailability[slots]     | Array  | Next slot available in HH:ii format (ie. 14:45). Just shown when the next available slot is for the same requested day.         |
+| previousAvailability[date]  | Array  | Previous slot available for the same day if there is not availability for the requested slot.                                   |
+| previousAvailability[slots] | Array  | Previous slot available in HH:ii format (ie. 12:45). Just shown when the previous available slot is for the same requested day. |
 
 ## The Pending Booking Object
 
@@ -1011,10 +1045,10 @@ On the onboarding process, you will provide the Mozrest team with the endpoint y
 
 This is how the pending booking object structure looks like.
 
-| Key | Type | Description |
-| --- | ---- | ----------- |
-| id | String | Pending Booking id |
-| notes | Text | Collection of notes provided by the venue |
+| Key         | Type    | Description                                         |
+|-------------|---------|-----------------------------------------------------|
+| id          | String  | Pending Booking id                                  |
+| notes       | Text    | Collection of notes provided by the venue           |
 | holdingTime | Integer | How long the RMS will hold the booking (in seconds) |
 
 ## The Booking Object
@@ -1027,7 +1061,6 @@ This is how the pending booking object structure looks like.
   "venueId": "60e890aca5f07b6ee5b950b1",
   "bookingChannelId": "60e890aca5f07b6ee5b950b3",
   "partySize": 4,
-  "session": "lunch",
   "status": "confirmed",
   "date": "2021-11-06T12:00:00+02:00",
   "notes": "I'm alergic to peanuts",
@@ -1054,29 +1087,28 @@ This is how the pending booking object structure looks like.
 ```
 
 
-| Key                          | Type | Description                                                                                                           |
-|------------------------------| ---- |-----------------------------------------------------------------------------------------------------------------------|
-| id                           | String | Booking id                                                                                                            |
-| venueId                      | String | Venue id for booking                                                                                                  |
-| bookingChannelId             | String | Booking channel id where the customer placed the booking                                                              |
-| status                       | String | Booking status `[pending, confirmed, canceled, faked, honored]`                                                       |
-| partySize                    | Int | Number of people                                                                                                      |
-| session                      | String | Booking session                                                                                                       |
+| Key                          | Type     | Description                                                                                                           |
+|------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| id                           | String   | Booking id                                                                                                            |
+| venueId                      | String   | Venue id for booking                                                                                                  |
+| bookingChannelId             | String   | Booking channel id where the customer placed the booking                                                              |
+| status                       | String   | Booking status `[pending, confirmed, canceled, faked, honored]`                                                       |
+| partySize                    | Int      | Number of people                                                                                                      |
 | date                         | Datetime | Booking date and time in Timestamp UTC format (ie. Saturday, 16 October 2021 14:30 is 1634387400 on timestamp)        |
-| notes                        | Text | User notes                                                                                                            |
-| cancelActor                  | String | Who had canceled the booking                                                                                          |
-| cancelReason                 | Text | Why the booking has been canceled                                                                                     |
+| notes                        | Text     | User notes                                                                                                            |
+| cancelActor                  | String   | Who had canceled the booking                                                                                          |
+| cancelReason                 | Text     | Why the booking has been canceled                                                                                     |
 | canceledAt                   | Datetime | When the booking has been canceled (UTC)                                                                              |
-| paymentGatewayToken          | String | Payment gateway token for customers credit card                                                                       |
-| contact[firstname]           | Text | Customer's first name                                                                                                 |
-| contact[lastname]            | Text | Customer's last name                                                                                                  |
-| contact[email]               | Text | Customer's email (ie. john.doe@email.com)                                                                             |
-| contact[telephone]           | Int | Customer's telephone including country code but NO sign (ie. +44 20 7234 3456 -> 442072343456 )                       |
-| contact[locale]              | Text | Customer's language (<a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">ISO2</a> format) |
-| contact[address][country]    | Text | Customer's country (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format)       |
-| contact[address][city]       | Text | Customer's city                                                                                                       |
-| contact[address][region]     | Text | Customer's region                                                                                                     |
-| contact[address][street]     | Text | Customer's address                                                                                                    |
-| contact[address][postalCode] | Text | Customer's postal code                                                                                                |
-| contact[optInConsent]        | Boolean | Allow to receive marketing emails from the Venue and the Partner (default: false)                                     |
+| paymentGatewayToken          | String   | Payment gateway token for customers credit card                                                                       |
+| contact[firstname]           | Text     | Customer's first name                                                                                                 |
+| contact[lastname]            | Text     | Customer's last name                                                                                                  |
+| contact[email]               | Text     | Customer's email (ie. john.doe@email.com)                                                                             |
+| contact[telephone]           | Int      | Customer's telephone including country code but NO sign (ie. +44 20 7234 3456 -> 442072343456 )                       |
+| contact[locale]              | Text     | Customer's language (<a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">ISO2</a> format) |
+| contact[address][country]    | Text     | Customer's country (<a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO2</a> format)       |
+| contact[address][city]       | Text     | Customer's city                                                                                                       |
+| contact[address][region]     | Text     | Customer's region                                                                                                     |
+| contact[address][street]     | Text     | Customer's address                                                                                                    |
+| contact[address][postalCode] | Text     | Customer's postal code                                                                                                |
+| contact[optInConsent]        | Boolean  | Allow to receive marketing emails from the Venue and the Partner (default: false)                                     |
 
